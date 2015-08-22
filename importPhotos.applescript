@@ -16,8 +16,8 @@ end to_alias
 on import_images(theFiles)
 	global file_count
 	local theFiles
-	log(number of items in theFiles)
 	set file_count to file_count + number of items in theFiles
+	log("last import:", number of items in theFiles, "Cummulative:", file_count)
 	set imageList to {}
 	repeat with i from 1 to number of items in theFiles
 		set this_item to item i of theFiles as alias
@@ -26,11 +26,13 @@ on import_images(theFiles)
 	(*
 	Run Photos App
 	*)
-	tell application "Photos"
-		activate
-		delay 5
-		import imageList skip check duplicates no
-	end tell
+	with timeout of (24 * 60 * 60) seconds -- yes 24 hours!
+		tell application "Photos"
+			activate
+			delay 5
+			import imageList skip check duplicates no
+		end tell
+	end timeout
 end import_images
 
 set sourcePath to paragraphs of (read POSIX file "/Users/Shared/Photo Library/photoImportWorkflow/path_list.txt")
