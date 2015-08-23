@@ -1,0 +1,3 @@
+# Taming My Photos
+
+Photos and video have been the bain of my existance for the past few years. Once my kids were born, the gerth of the family photo library became quickly unmanegable. The early versions of iPhoto & Picasa were easily troubled once the library became big enough. This forced me to create multiple libraries in an effort to make it manegable, however, duplicates becamea growing problem.
