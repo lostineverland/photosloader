@@ -2,7 +2,7 @@
 
 import os
 
-prefix = '/Users/Shared/Photo Library/'
+prefix = ''
 dirs = set()
 with open('file_list.txt') as allFiles:
     for i, file in enumerate(allFiles):

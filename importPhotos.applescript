@@ -1,4 +1,8 @@
 #! /usr/bin/osascript
+(*
+I prefer to run this script in a nohup, that way I can capture the output.
+	$ nohup ./importPhotos.applescript > import.log 2>&1 &
+*)
 
 set file_count to 0
 
