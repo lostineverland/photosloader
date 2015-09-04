@@ -17,8 +17,13 @@ The use of a deduper was a necessity because applescript has a very limited supp
 # Choose The Folders
 
 ```shell
-> find . -type f > grep -iv jpg$ | grep -iv png$ | grep -iv avi$ | grep -iv mp4$ | grep -iv mov$ | grep -iv mpg
+> find . -type f | grep -iv jpg$ | grep -iv png$ | grep -iv avi$ | grep -iv mp4$ | grep -iv mov$ | grep -iv mpg
 > find . -type f > file_list.txt
+```
+
+# Run Loader
+```shell
+> nohup ./importPhotos.applescript > import.log 2>&1 &
 ```
 # Setting Up A Shared Folder
   • Set this up as a different post
