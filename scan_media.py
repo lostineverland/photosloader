@@ -50,6 +50,18 @@ def duplicates(data):
     dups = toolz.valfilter(hasDup, data['media'])
     return {'counter': sum(map(len, dups.values())), 'media': dups}
 
+def delete_all(data):
+    files = toolz.concatv(data['media'].values())
+    map(os.remove, files)
+
+def subtract(A, B):
+    a = set(A['media'].keys())
+    b = set(B['media'].keys())
+    keys = a - b
+    media = toolz.keyfilter(lambda key: key in keys, A['media'])
+    counter = sum(map(len, media.values()))
+    return {'counter': counter, 'media': media}
+
 def make_links(dest_path, i, paths):
     'create hard links in dest_path with all the contents, for easy comparison'
     dest = '{0}/{1}'.format(dest_path, i)
