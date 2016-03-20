@@ -1,8 +1,8 @@
 file_list.txt
 path_list.txt
-data.json
-duplicates.txt
-duplicates
+*.json
+*.files
+*pyc
 photoImportWorkflow.sublime-project
 photoImportWorkflow.sublime-workspace
 
