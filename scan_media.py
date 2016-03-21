@@ -1,5 +1,5 @@
 import os, sys, hashlib, json, toolz
-import argparse
+import argparse, datetime
 
 media_types = [
     'jpg',
@@ -34,7 +34,8 @@ class mediaStruct(object):
     def add_media(self, fullpath):
         self.counter += 1
         if self.counter % 1000 == 0:
-            print "{0} files scanned".format(self.counter)
+            now = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+            print "{0}  {1} files scanned".format(now, self.counter)
         hash = hash_file(fullpath)
         self.media.setdefault(hash, []).append(fullpath)
 
