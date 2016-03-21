@@ -69,7 +69,7 @@ class mediaStruct(object):
 
     def delete_all(self):
         if raw_input('are you sure? (y/n) ') == 'y':
-            files = toolz.concatv(self.media.values())
+            files = toolz.concatv(*self.media.values())
             for i in files:
                 os.remove(i)
                 print 'deleted:', i
