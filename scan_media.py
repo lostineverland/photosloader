@@ -91,7 +91,7 @@ class mediaStruct(object):
         if self.source:
             dest = self.source[:-4] + 'files'
             os.mkdir(dest)
-            for i, paths in enumerate(data.media.values()):
+            for i, paths in enumerate(self.media.values()):
                 make_links(dest, i, paths)
         else:
             print 'you must save before exploring this media\n'
