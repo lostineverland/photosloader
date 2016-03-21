@@ -31,7 +31,7 @@ class mediaStruct(object):
         self.media = media
         self.source = source
 
-    def add_media(fullpath):
+    def add_media(self, fullpath):
         self.counter += 1
         if self.counter % 1000 == 0:
             print "{0} files scanned".format(self.counter)
