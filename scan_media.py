@@ -55,6 +55,7 @@ class mediaStruct(object):
                 }))
         self.source = output_file
 
+    @property
     def unique(self):
         return len(self.media.keys())
 
