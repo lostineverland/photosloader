@@ -55,6 +55,9 @@ class mediaStruct(object):
                 }))
         self.source = output_file
 
+    def unique(self):
+        return len(self.media.keys())
+
     def merge(self, b):
         counter = self.counter + b.counter
         media = {}
