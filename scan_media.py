@@ -41,6 +41,8 @@ class mediaStruct(object):
 
     @classmethod
     def load(cls, input_file):
+        if input_file[-5:].lower() != '.json':
+            input_file += '.json'
         with open(input_file) as f:
             data = json.loads(f.read())
         return cls(data['media'], data['counter'], source=input_file)
@@ -100,6 +102,11 @@ class mediaStruct(object):
                 self._make_links(dest, i, paths)
         else:
             print 'you must save before exploring this media\n'
+
+    def get_media_size(self):
+        files = toolz.concatv(*self.media.values())
+        size_tuple = lambda path: (path, os.path.getsize(path) / 1024.0)
+        self.media_size = dict(map(size_tuple, files))
 
 def parse_cli():
     parser = argparse.ArgumentParser(usage="usage: %(prog)s")
