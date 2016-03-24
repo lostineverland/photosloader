@@ -104,9 +104,13 @@ class mediaStruct(object):
             print 'you must save before exploring this media\n'
 
     def get_media_size(self):
-        files = toolz.concatv(*self.media.values())
-        size_tuple = lambda path: (path, os.path.getsize(path) / 1024.0)
-        self.media_size = dict(map(size_tuple, files))
+        size_tuple = lambda (key, val): (key, os.path.getsize(val[0]) / 1024.0)
+        self.media_size = dict(map(size_tuple, self.media.iteritems()))
+
+    def pick_media(self, keys):
+        white_list = lambda key: key in keys
+        selected = toolz.keyfilter(white_list, self.media)
+        return mediaStruct(selected)
 
 def parse_cli():
     parser = argparse.ArgumentParser(usage="usage: %(prog)s")
