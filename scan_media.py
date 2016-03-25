@@ -61,7 +61,7 @@ class mediaStruct(object):
     def unique(self):
         return len(self.media.keys())
 
-    def merge(self, b):
+    def __add__(self, b):
         counter = self.counter + b.counter
         media = {}
         photos = self.media.items() + b.media.items()
