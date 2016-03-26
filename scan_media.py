@@ -1,6 +1,7 @@
 import os, sys, hashlib, json, toolz
 import argparse, datetime
 from collections import Counter
+
 media_types = [
     'jpg',
     'png',
@@ -110,6 +111,13 @@ class mediaStruct(object):
         else:
             print 'you must save before exploring this media\n'
 
+    def export_paths(self, output_file):
+        files = toolz.concatv(*self.media.values())
+        dirs = set()
+        map(lambda file: dirs.add(file.rsplit('/', 1)[0]), files)
+        with open(output_file, 'w') as f:
+            f.write('\n'.join(sorted(dirs)))
+
     def get_media_size(self):
         size_tuple = lambda (key, val): (key, os.path.getsize(val[0]) / 1024.0)
         self.media_size = dict(map(size_tuple, self.media.iteritems()))
@@ -131,7 +139,7 @@ def main():
     args = parse_cli()
     not_media = Counter()
     getType = lambda x: x.rsplit('.', 1)[-1] 
-    notMedia = lambda path: not_media[getType(path)] += 1
+    notMedia = lambda path: not_media.update([getType(path)])
     isMedia = lambda x: getType(x).lower() in media_types
     buildFullPath = toolz.curry(lambda path, file: '/'.join([path, file]) if isMedia(file) else notMedia(file))
     iterFiles = lambda (path, dirs, files): map(buildFullPath(path), files)
