@@ -96,18 +96,22 @@ class mediaStruct(object):
         media = toolz.keyfilter(lambda key: key in keys, self.media)
         return mediaStruct(media)
 
-    def _make_links(self, dest_path, i, paths):
+    def _make_links(self, dest_path, i, paths, symlink=False):
         'create hard links in dest_path with all the contents, for easy comparison'
         dest = '{0}/{1}'.format(dest_path, i)
+        if symlink:
+            linker = os.symlink
+        else:
+            linker = os.link
         for j, path in enumerate(paths):
-            os.link(path, '{0}_img_{1}.{2}'.format(dest, j, path.rsplit('.', 1)[-1]))
+            linker(path, '{0}_img_{1}.{2}'.format(dest, j, path.rsplit('.', 1)[-1]))
 
-    def explore_media(self):
+    def explore_media(self, symlink=False):
         if self.source:
             dest = self.source[:-4] + 'files'
             os.mkdir(dest)
             for i, paths in enumerate(self.media.values()):
-                self._make_links(dest, i, paths)
+                self._make_links(dest, i, paths, symlink)
         else:
             print 'you must save before exploring this media\n'
 
