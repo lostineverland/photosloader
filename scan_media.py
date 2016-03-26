@@ -1,6 +1,6 @@
 import os, sys, hashlib, json, toolz
 import argparse, datetime
-
+from collections import Counter
 media_types = [
     'jpg',
     'png',
@@ -99,7 +99,7 @@ class mediaStruct(object):
         'create hard links in dest_path with all the contents, for easy comparison'
         dest = '{0}/{1}'.format(dest_path, i)
         for j, path in enumerate(paths):
-            os.link(path, '{0}_img_{1}.{2}'.format(dest, j, path[-3:]))
+            os.link(path, '{0}_img_{1}.{2}'.format(dest, j, path.rsplit('.', 1)[-1]))
 
     def explore_media(self):
         if self.source:
@@ -129,8 +129,11 @@ def parse_cli():
 
 def main():
     args = parse_cli()
-    isMedia = lambda x: x.rsplit('.', 1)[-1].lower() in media_types
-    buildFullPath = toolz.curry(lambda path, file: '/'.join([path, file]) if isMedia(file) else None)
+    not_media = Counter()
+    getType = lambda x: x.rsplit('.', 1)[-1] 
+    notMedia = lambda path: not_media[getType(path)] += 1
+    isMedia = lambda x: getType(x).lower() in media_types
+    buildFullPath = toolz.curry(lambda path, file: '/'.join([path, file]) if isMedia(file) else notMedia(file))
     iterFiles = lambda (path, dirs, files): map(buildFullPath(path), files)
     file_list = filter(None, toolz.mapcat(iterFiles, os.walk(args.base_path)))
     print '{0} total files'.format(len(file_list))
@@ -139,6 +142,7 @@ def main():
     for media in file_list:
         image_scan.add_media(media)
     image_scan.save(args.output_file)
+    print 'file types not imported', not_media
 
 if __name__ == '__main__':
     main()
