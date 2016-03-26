@@ -61,13 +61,20 @@ class mediaStruct(object):
     def unique(self):
         return len(self.media.keys())
 
-    def __add__(self, b):
-        counter = self.counter + b.counter
+    def __add__(self, B):
+        counter = self.counter + B.counter
         media = {}
-        photos = self.media.items() + b.media.items()
-        combine = lambda (key, val): media.setdefault(key, []).append(val)
+        photos = self.media.items() + B.media.items()
+        combine = lambda (key, val): media.setdefault(key, []).extend(val)
         map(combine, photos)
         return mediaStruct(media, counter)
+
+    def intersection(self, B):
+        a = set(self.media.keys())
+        b = set(B.media.keys())
+        keys = a.intersection(b)
+        media = toolz.keyfilter(lambda key: key in keys, self.media)
+        return mediaStruct(media)
 
     def duplicates(self):
         hasDup = lambda val: len(val) > 1
