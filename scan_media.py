@@ -129,7 +129,7 @@ def parse_cli():
 
 def main():
     args = parse_cli()
-    isMedia = lambda x: x[-3:].lower() in media_types
+    isMedia = lambda x: x.rsplit('.', 1)[-1].lower() in media_types
     buildFullPath = toolz.curry(lambda path, file: '/'.join([path, file]) if isMedia(file) else None)
     iterFiles = lambda (path, dirs, files): map(buildFullPath(path), files)
     file_list = filter(None, toolz.mapcat(iterFiles, os.walk(args.base_path)))
