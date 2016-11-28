@@ -4,6 +4,7 @@ from collections import Counter
 
 media_types = [
     'jpg',
+    'jpeg',
     'png',
     'avi',
     'mp4',
@@ -96,7 +97,7 @@ class mediaStruct(object):
         media = toolz.keyfilter(lambda key: key in keys, self.media)
         return mediaStruct(media)
 
-    def _make_links(self, dest_path, i, paths, symlink=False):
+    def _make_links(self, dest_path, i, paths, symlink):
         'create hard links in dest_path with all the contents, for easy comparison'
         dest = '{0}/{1}'.format(dest_path, i)
         if symlink:
@@ -106,7 +107,7 @@ class mediaStruct(object):
         for j, path in enumerate(paths):
             linker(path, '{0}_img_{1}.{2}'.format(dest, j, path.rsplit('.', 1)[-1]))
 
-    def explore_media(self, symlink=False):
+    def explore_media(self, symlink=True):
         if self.source:
             dest = self.source[:-4] + 'files'
             os.mkdir(dest)

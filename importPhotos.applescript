@@ -39,7 +39,7 @@ on import_images(theFiles)
 	end timeout
 end import_images
 
-set sourcePath to paragraphs of (read POSIX file "/Users/Shared/Photo Library/photoImportWorkflow/path_list.txt")
+set sourcePath to paragraphs of (read POSIX file "/Users/Shared/Photo Library/path_list.txt")
 repeat with nextLine in sourcePath
     if length of nextLine is greater than 0 then
 		set importFolder to to_alias(nextLine)
