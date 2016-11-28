@@ -1,8 +1,4 @@
-file_list.txt
-path_list.txt
 *.json
 *.files
 *pyc
-photoImportWorkflow.sublime-project
-photoImportWorkflow.sublime-workspace
 
