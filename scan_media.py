@@ -101,7 +101,7 @@ class mediaStruct(object):
         'create hard links in dest_path with all the contents, for easy comparison'
         dest = '{0}/{1}'.format(dest_path, i)
         if symlink:
-            linker = os.symlink
+            linker = lambda src, dest: os.symlink('../' + src, dest)
         else:
             linker = os.link
         for j, path in enumerate(paths):
